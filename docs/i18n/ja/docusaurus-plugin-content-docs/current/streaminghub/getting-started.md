@@ -125,7 +125,7 @@ public class ChatHub : StreamingHubBase<IChatHub, IChatHubReceiver>, IChatHub
 
     public async ValueTask LeaveAsync()
     {
-        room.All.OnLeave(ConnectionId.toString());
+        room.All.OnLeave(userName);
         await room.RemoveAsync(Context);
     }
 

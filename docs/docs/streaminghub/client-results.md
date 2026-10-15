@@ -13,7 +13,7 @@ interface IMyHub : IStreamingHub<IMyHub, IMyHubReceiver>
 {
 }
 
-interface IMyHubReveiver
+interface IMyHubReceiver
 {
     // The Client results method is defined in the Receiver with a return type of Task or Task<T>
     Task<string> HelloAsync(string name, int age);
@@ -31,7 +31,7 @@ class MyHubReceiver : IMyHubReceiver
         var result = await ReadInputAsync();
         return result;
     }
-    public void OnMessage()
+    public void OnMessage(string message)
     {
         Console.WriteLine($"OnMessage: {message}");
     }
@@ -41,10 +41,10 @@ class MyHubReceiver : IMyHubReceiver
 On the server, method calls can be made through `Client` or `Single` of the group, and the result can be received.
 
 ```csharp
-var result = await Client.HelloAsync();
+var result = await Client.HelloAsync("Alice", 30);
 Console.WriteLine(result);
 // or
-var result2 = await _group.Single(clientId).HelloAsync();
+var result2 = await _group.Single(clientId).HelloAsync("Alice", 30);
 Console.WriteLine(result2);
 ```
 
